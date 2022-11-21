@@ -333,6 +333,7 @@ int main(){
     if (output == 1){
         string ofilename;
         cout << "Input name of txt file" << endl;
+        cin.ignore();
         getline(cin, ofilename);
         fout.open(ofilename);
         if(!fout.good()) exit(1);
@@ -359,6 +360,7 @@ int main(){
     else{
         string filename;
         cout << "Input name of txt file" << endl;
+        cin.ignore();
         getline(cin, filename);
         ifstream ifs;
         ifs.open(filename);
@@ -404,12 +406,13 @@ int main(){
     cin >> c;
     
     if (c==1){
-        if (output == 1) hyperbole_intersection(hyp, fout);
+        if (output == 1) hyperbole_intersection(hyp);
         else hyperbole_intersection(hyp);
     }
     else{
         string filename;
         cout << "Input name of txt file" << endl;
+        cin.ignore();
         getline(cin, filename);
         ifstream ifs;
         ifs.open(filename);
@@ -430,6 +433,7 @@ int main(){
     else{
         string filename;
         cout << "Input name of txt file" << endl;
+        cin.ignore();
         getline(cin, filename);
         ifstream ifs;
         ifs.open(filename);
@@ -451,6 +455,7 @@ int main(){
     else{
         string filename;
         cout << "Input name of txt file" << endl;
+        cin.ignore();
         getline(cin, filename);
         ifstream ifs;
         ifs.open(filename);
@@ -472,6 +477,7 @@ int main(){
     else{
         string filename;
         cout << "Input name of txt file" << endl;
+        cin.ignore();
         getline(cin, filename);
         ifstream ifs;
         ifs.open(filename);
