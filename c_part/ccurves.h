@@ -73,7 +73,7 @@ double * parabola_intersection_with_parabola(Parabola parabola, Parabola other);
 
 double parabola_intersection_square_with_line(Parabola parabola, double k, double m);
 
-double parabola_intersection_square(Parabola parabola, Parabola other);
+double parabola_intersection_square_with_parabola(Parabola parabola, Parabola other);
 
 int ellipse_check_ellipse(Ellipse e);
 

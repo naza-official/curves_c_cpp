@@ -1,7 +1,4 @@
 #include "ccurves.h"
-#include <stdio.h>
-
-
 
 
 Ellipse test_create_ellipse_console(FILE * fh, FILE * fi){
@@ -15,7 +12,7 @@ Ellipse test_create_ellipse_console(FILE * fh, FILE * fi){
 }
 
 
-void test_check_point_ellipse_console(FILE * fh, FILE * fi, Ellipse ellipse){
+int test_check_point_ellipse_console(FILE * fh, FILE * fi, Ellipse ellipse){
     Point x;
     fprintf(fh, "Is inside point test\n");
     printf("Is inside point test\n");
@@ -29,21 +26,23 @@ void test_check_point_ellipse_console(FILE * fh, FILE * fi, Ellipse ellipse){
     
     fprintf(fh, "Test complited!\n");
     fprintf(fh, "Result: %i \n", res); 
+    return res;
 } 
 
 
 
-void test_square_ellipse_console(FILE * fh,FILE * fi,  Ellipse ellipse){
+double test_square_ellipse_console(FILE * fh,FILE * fi,  Ellipse ellipse){
     fprintf(fh, "Square of ellipse\n");
     printf( "Square of ellipse\n");
     double res = ellipse_get_square(ellipse);
     if (res >= 0) fprintf(fh, "Test complited!\n");
     else fprintf(fh, "Test failed!\n");
     fprintf(fh, "Result: %lf\n", res); 
+    return res;
 }
 
 
-void test_get_value_ellipse(FILE * fh,FILE * fi,  Ellipse ellipse  ){
+double test_get_value_ellipse(FILE * fh,FILE * fi,  Ellipse ellipse  ){
     double res, x;
     fprintf(fh, "Value in the point!\n");
     printf("Value in the point!\n");
@@ -56,17 +55,18 @@ void test_get_value_ellipse(FILE * fh,FILE * fi,  Ellipse ellipse  ){
     else fprintf(fh, "Test failed!\n");
     
     fprintf(fh, "Result: %lf\n", res);
+    return res;
     
 }
 
 
-void test_intersection_ellipse_with_ellipse(FILE * fh,FILE * fi,  Ellipse ellipse){
+Point * test_intersection_ellipse_with_ellipse(FILE * fh,FILE * fi,  Ellipse ellipse){
     fprintf(fh, "test_intersection_ellipse_with_ellipse\n");
     printf( "test_intersection_ellipse_with_ellipse\n");
     Ellipse ellipse_2;
     ellipse_input(fi, ellipse);
              
-    Point *root;
+    static Point *root;
      
     root = ellipse_intersection_with_ellipse(ellipse, ellipse_2);
     for (int i = 0; i<8; i++){
@@ -78,12 +78,13 @@ void test_intersection_ellipse_with_ellipse(FILE * fh,FILE * fi,  Ellipse ellips
         }
     }
     fprintf(fh, "Test completed!\n");
+    return root;
 }
 
 
-void test_intersection_ellipse_with_line(FILE * fh,FILE * fi,  Ellipse ellipse){
+double * test_intersection_ellipse_with_line(FILE * fh,FILE * fi,  Ellipse ellipse){
              
-    double *root;
+    static double *root;
     double m, c;
     fprintf(fh, "test_intersection_ellipse_with_line y = mx+c\n");
     printf( "test_intersection_ellipse_with_line y = mx+c\n");
@@ -107,6 +108,7 @@ void test_intersection_ellipse_with_line(FILE * fh,FILE * fi,  Ellipse ellipse){
         }
     }
     fprintf(fh, "Test completed!\n");
+    return root;
 }
 
 
@@ -129,7 +131,7 @@ Parabola test_create_parabol(FILE * fh, FILE * fi){
 
 
 
-void test_check_point_parabola(FILE * fh,FILE * fi,  Parabola parabola  ){
+int test_check_point_parabola(FILE * fh,FILE * fi,  Parabola parabola  ){
     Point x;
     fprintf(fh, "Is inside point test\n");
     printf( "Is inside point test\n");
@@ -143,10 +145,11 @@ void test_check_point_parabola(FILE * fh,FILE * fi,  Parabola parabola  ){
     
     fprintf(fh, "Test complited!\n");
     fprintf(fh, "Result: %i\n", res); 
+    return res;
 } 
 
 
-void test_get_value_parabola(FILE * fh,FILE * fi,  Parabola parabola){
+double test_get_value_parabola(FILE * fh,FILE * fi,  Parabola parabola){
     double x;
     fprintf(fh, "Get value test\n");
     printf( "Get value test\n");
@@ -157,11 +160,12 @@ void test_get_value_parabola(FILE * fh,FILE * fi,  Parabola parabola){
     double res = parabola_get_value(parabola, x);
     fprintf(fh, "Point: f(x) = %lf", res);
     fprintf(fh, "Test complited!\n");
+    return res;
 } 
 
 
 
-void test_get_focus_parabola(FILE * fh,FILE * fi,  Parabola parabola  ){
+Point test_get_focus_parabola(FILE * fh,FILE * fi,  Parabola parabola  ){
     fprintf(fh, "Get focus test\n");
     printf( "Get focus test\n");
 
@@ -169,10 +173,11 @@ void test_get_focus_parabola(FILE * fh,FILE * fi,  Parabola parabola  ){
     fprintf(fh, "Point: x = %lf y = %lf\n", res.x, res.y);
     if (parabola_check_point(parabola, res)) fprintf(fh, "Test complited!\n");
     else fprintf(fh, "Test failed!\n");
+    return res;
 } 
 
 
-void parabola_intersection(FILE * fh,FILE * fi,  Parabola parabola){
+double * parabola_intersection(FILE * fh,FILE * fi,  Parabola parabola){
     int choice;
     double *root;
     fprintf(fh, "Intersection test\n");
@@ -211,11 +216,12 @@ void parabola_intersection(FILE * fh,FILE * fi,  Parabola parabola){
         }
     }
     fprintf(fh, "Test completed!\n");
+    return root;
 }
 
 
 
-void test_parabola_intersection_square(FILE * fh,FILE * fi,  Parabola parabola){
+double test_parabola_intersection_square(FILE * fh,FILE * fi,  Parabola parabola){
     int choice;
     double root;
     fprintf(fh, "Intersection square\n");
@@ -239,11 +245,12 @@ void test_parabola_intersection_square(FILE * fh,FILE * fi,  Parabola parabola){
         printf("Parabola\n");
         Parabola parabola_2;
         parabola_input(fi, parabola_2);
-        root = parabola_intersection_square(parabola_2, parabola);
+        root = parabola_intersection_square_with_parabola(parabola_2, parabola);
                 
     }
     fprintf(fh, "Result: %lf\n", root);
     fprintf(fh, "Test completed!\n");
+    return root;
 }
 
 
@@ -260,7 +267,7 @@ Hyperbole test_create_hyperbole(FILE * fh, FILE * fi){
 }
 
 
-void test_check_point_hyperbole(FILE * fh, FILE * fi, Hyperbole hyperbole  ){
+int test_check_point_hyperbole(FILE * fh, FILE * fi, Hyperbole hyperbole  ){
     Point x;
     fprintf(fh, "Is inside point test\n");
     printf( "Is inside point test\n");
@@ -273,12 +280,13 @@ void test_check_point_hyperbole(FILE * fh, FILE * fi, Hyperbole hyperbole  ){
     int res = hyperbole_check_point(hyperbole, x);
     
     fprintf(fh, "Test complited! RES = %i\n", res);
+    return res;
 }
 
 
 
 
-void test_get_value_hyperbole(FILE * fh,FILE * fi, Hyperbole hyperbole){
+double test_get_value_hyperbole(FILE * fh,FILE * fi, Hyperbole hyperbole){
     double x;
     fprintf(fh, "Get value test\n");
     printf( "Get value test\n");
@@ -289,11 +297,12 @@ void test_get_value_hyperbole(FILE * fh,FILE * fi, Hyperbole hyperbole){
     double res = hyperbole_get_value(hyperbole, x, 1);
     fprintf(fh, "Result: %lf\n", res);
     fprintf(fh, "Test complited!\n");
+    return res;
 } 
 
 
 
-void test_get_foci_hyperbole(FILE * fh,FILE * fi, Hyperbole hyperbole  ){
+Point * test_get_foci_hyperbole(FILE * fh,FILE * fi, Hyperbole hyperbole  ){
     fprintf(fh, "Get focus test\n");
     printf( "Get focus test\n");
 
@@ -302,12 +311,13 @@ void test_get_foci_hyperbole(FILE * fh,FILE * fi, Hyperbole hyperbole  ){
     fprintf(fh, "Point2: x = %lf  y = %lf", (*(res+1)).x, (*(res+1)).y);
     if (hyperbole_check_point(hyperbole, *(res))) fprintf(fh, "Test complited!\n");
     else fprintf(fh, "Test failed!\n");
+    return res;
 } 
 
 
 
 
-void test_hyperbole_intersection(FILE * fh,FILE * fi, Hyperbole hyperbole){
+Point * test_hyperbole_intersection(FILE * fh,FILE * fi, Hyperbole hyperbole){
     int choice;
     Point *root;
     fprintf(fh, "Intersection test\n");
@@ -341,6 +351,7 @@ void test_hyperbole_intersection(FILE * fh,FILE * fi, Hyperbole hyperbole){
         // }
     }
     fprintf(fh, "Test completed!\n");
+    return root;
 }
 
 
@@ -434,9 +445,6 @@ int main(){
     }
 
     fclose(fp);
-    
-        
-    
-
+             
     return 0;
 }

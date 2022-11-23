@@ -367,6 +367,7 @@ int ellipse_input(FILE *fi, Ellipse e){
         fscanf(fi, "%lf", &yr);
         return ellipse_init_focuses(e, focus_1, focus_2, xr, yr);
      }
+    return 0;
 }
 
 void ellipse_print(FILE * fh, Ellipse e ){
