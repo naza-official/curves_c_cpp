@@ -61,9 +61,9 @@ double parabola_get_value(Parabola parabola, double x);
 
 Point parabola_get_focus(Parabola parabola);
 
-void parabola_input(Parabola parabola);
+void parabola_input(FILE * fi, Parabola parabola);
 
-void parabola_print(Parabola parabola );
+void parabola_print(FILE * fh, Parabola parabola );
 
 int parabola_check_point(Parabola parabola, Point point);
 
@@ -105,9 +105,9 @@ int ellipse_is_inside(Ellipse e, Point a);
 
 double ellipse_get_square(Ellipse e);
 
-int ellipse_input(Ellipse e);
+int ellipse_input(FILE *fi, Ellipse e);
 
-void ellipse_print(Ellipse e );
+void ellipse_print(FILE * fh, Ellipse e );
   
 double * ellipse_intersection_with_line(Ellipse e, double m, double c);
 
@@ -127,9 +127,9 @@ double hyperbole_get_a(Hyperbole h );
 
 double hyperbole_get_b(Hyperbole h );
    
-void hyperbole_input(Hyperbole h);
+void hyperbole_input(FILE * fi, Hyperbole h);
 
-void hyperbole_print(Hyperbole h);
+void hyperbole_print(FILE * fh, Hyperbole h);
 
 Point * hyperbole_get_foci(Hyperbole h);
 

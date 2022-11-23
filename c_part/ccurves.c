@@ -34,19 +34,19 @@ Point parabola_get_focus(Parabola parabola){
 
 
 
-void parabola_input(Parabola parabola){
+void parabola_input(FILE *fi, Parabola parabola){
 
     printf(" << Parabola >> \na = ");
-    scanf("%lf", &parabola.equation[0]);
+    fscanf(fi, "%lf", &parabola.equation[0]);
     printf("b = ");
-    scanf("%lf", &parabola.equation[1]);
+    fscanf(fi, "%lf", &parabola.equation[1]);
     printf("c = ");
-    scanf("%lf", &parabola.equation[2]);
+    fscanf(fi, "%lf", &parabola.equation[2]);
 
 }
 
-void parabola_print(Parabola parabola ){
-    printf("y= %lf*x^2 + %lf*x + %lf", parabola.equation[0], parabola.equation[1], parabola.equation[2]);
+void parabola_print(FILE * fh, Parabola parabola ){
+    fprintf(fh, "y= %lf*x^2 + %lf*x + %lf", parabola.equation[0], parabola.equation[1], parabola.equation[2]);
 }
 
 int parabola_check_point(Parabola parabola, Point point){
@@ -333,18 +333,18 @@ double ellipse_get_square(Ellipse e){
     return M_PI*e.rx*e.ry;
 }
 
-int ellipse_input(Ellipse e){
+int ellipse_input(FILE *fi, Ellipse e){
     int check;
     printf( "Choose a method of input: 1 -- coordinates of verteces, 0 -- foci and radiuses\n");
-    scanf("%i", &check);
+    fscanf(fi, "%i", &check);
     if (check){
         Point array[4];
         for (int i = 0; i < 4; i++){
             printf( "Vertex %i \n", i+1);
             printf( "x = ");
-            scanf("%lf", &array[i].x);
+            fscanf(fi, "%lf", &array[i].x);
             printf( "y = ");
-            scanf("%lf", &array[i].y);
+            fscanf(fi, "%lf", &array[i].y);
             return ellipse_init_verteces(e, array);
         }
     }
@@ -353,34 +353,34 @@ int ellipse_input(Ellipse e){
         double xr, yr;
         printf("Focus_1\n");
         printf("x = ");
-        scanf("%lf", &focus_1.x);
+        fscanf(fi, "%lf", &focus_1.x);
         printf("y = ");
-        scanf( "%lf", &focus_1.y);
+        fscanf(fi,  "%lf", &focus_1.y);
         printf("Focus_2\n");
         printf("x = ");
-        scanf("%lf", &focus_2.x);
+        fscanf(fi, "%lf", &focus_2.x);
         printf("y = ");
-        scanf( "%lf", &focus_2.y);
+        fscanf(fi,  "%lf", &focus_2.y);
         printf("XR = ");
-        scanf("%lf", &xr);
+        fscanf(fi, "%lf", &xr);
         printf("YR = ");
-        scanf("%lf", &yr);
+        fscanf(fi, "%lf", &yr);
         return ellipse_init_focuses(e, focus_1, focus_2, xr, yr);
      }
 }
 
-void ellipse_print(Ellipse e ){
-    printf( "<< Ellipse >>" );
-    printf( "-- Center --" );
-    printf( "(%lf , %lf)", e.center.x, e.center.y);
-    printf( "-- Verteces --" );
+void ellipse_print(FILE * fh, Ellipse e ){
+    fprintf(fh, "<< Ellipse >>" );
+    fprintf(fh, "-- Center --" );
+    fprintf(fh, "(%lf , %lf)", e.center.x, e.center.y);
+    fprintf(fh, "-- Verteces --" );
     for (int i = 0; i < 4; i++){
-        printf( "(%lf, %lf)", e.verteces[i].x, e.verteces[i].y);
+        fprintf(fh, "(%lf, %lf)", e.verteces[i].x, e.verteces[i].y);
     }
-    printf( "-- Focus_1 --" );
-    printf( "(%lf, %lf)", e.focus_1.x, e.focus_1.y);
-    printf( "-- Focus_2 --" );
-    printf( "(%lf, %lf)", e.focus_2.x, e.focus_2.y);
+    fprintf(fh, "-- Focus_1 --" );
+    fprintf(fh, "(%lf, %lf)", e.focus_1.x, e.focus_1.y);
+    fprintf(fh, "-- Focus_2 --" );
+    fprintf(fh, "(%lf, %lf)", e.focus_2.x, e.focus_2.y);
 }
 
 
@@ -609,20 +609,20 @@ double hyperbole_get_b(Hyperbole h ){
     return h.equation[3]; 
 }
    
-void hyperbole_input(Hyperbole h){
+void hyperbole_input(FILE *fi, Hyperbole h){
     double koefs[5];
     double r;
     printf( "<< Hyperbola >>\n");
     printf( "x0 = ");
-    scanf( "%lf", &koefs[0]);
+    fscanf(fi, "%lf", &koefs[0]);
     printf( "y0 = ");
-    scanf( "%lf", &koefs[1]);
+    fscanf(fi, "%lf", &koefs[1]);
     printf( "a = ");
-    scanf( "%lf", &koefs[2]);
+    fscanf(fi, "%lf", &koefs[2]);
     printf( "b = ");
-    scanf( "%lf", &koefs[3]);
+    fscanf(fi, "%lf", &koefs[3]);
     printf( "r = ");
-    scanf("%lf", &r);
+    fscanf(fi,"%lf", &r);
     koefs[2] /= r;
     koefs[3] /= r;
     koefs[4] = r/fabs(r);
@@ -630,13 +630,13 @@ void hyperbole_input(Hyperbole h){
     hyperbole_init(h, koefs);
 }
 
-void hyperbole_print(Hyperbole h){
+void hyperbole_print(FILE * fh, Hyperbole h){
     
-     printf( "<< Hyperbola >>" );
-     printf( "x0 = %lf " , hyperbole_get_x0(h) );
-     printf( "y0 = %lf " , hyperbole_get_y0(h) );
-     printf( "a = %lf " , hyperbole_get_a(h) );
-     printf( "b = %lf " , hyperbole_get_b(h) );
+     fprintf(fh, "<< Hyperbola >>" );
+     fprintf(fh, "x0 = %lf " , hyperbole_get_x0(h) );
+     fprintf(fh, "y0 = %lf " , hyperbole_get_y0(h) );
+     fprintf(fh, "a = %lf " , hyperbole_get_a(h) );
+     fprintf(fh, "b = %lf " , hyperbole_get_b(h) );
 }
 
 
