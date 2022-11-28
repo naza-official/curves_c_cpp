@@ -2,31 +2,31 @@
 #define N_1 2
 
 
-void parabola_init(Parabola parabola, double array[3]){
+void parabola_init(CParabola parabola, double array[3]){
     for (int i = 0; i < 3; i++)
         parabola.equation[i] = array[i];
 }
 
 
-double parabola_get_a(Parabola parabola){
+double parabola_get_a(CParabola parabola){
     return parabola.equation[0];
 }
 
-double parabola_get_b(Parabola parabola){
+double parabola_get_b(CParabola parabola){
     return parabola.equation[1];
 }
 
-double parabola_get_c(Parabola parabola){
+double parabola_get_c(CParabola parabola){
     return parabola.equation[2];
 }    
 
-double parabola_get_value(Parabola parabola, double x){
+double parabola_get_value(CParabola parabola, double x){
     return parabola.equation[0]*pow(x,2) + parabola.equation[1]*x + parabola.equation[2];
 } 
 
 
-Point parabola_get_focus(Parabola parabola){
-    Point res;
+CPoint parabola_get_focus(CParabola parabola){
+    CPoint res;
     res.x =(-1)* parabola.equation[1]/(2*parabola.equation[0]);
     res.y = (-1)*((pow(parabola.equation[1],2)-1)/(4*parabola.equation[0]))+parabola.equation[2];
     return res;
@@ -34,9 +34,9 @@ Point parabola_get_focus(Parabola parabola){
 
 
 
-void parabola_input(FILE *fi, Parabola parabola){
+void parabola_input(FILE *fi, CParabola parabola){
 
-    printf(" << Parabola >> \na = ");
+    printf(" << CParabola >> \na = ");
     fscanf(fi, "%lf", &parabola.equation[0]);
     printf("b = ");
     fscanf(fi, "%lf", &parabola.equation[1]);
@@ -45,15 +45,15 @@ void parabola_input(FILE *fi, Parabola parabola){
 
 }
 
-void parabola_print(FILE * fh, Parabola parabola ){
+void parabola_print(FILE * fh, CParabola parabola ){
     fprintf(fh, "y= %lf*x^2 + %lf*x + %lf", parabola.equation[0], parabola.equation[1], parabola.equation[2]);
 }
 
-int parabola_check_point(Parabola parabola, Point point){
+int parabola_check_point(CParabola parabola, CPoint point){
     return point.y >= parabola_get_value(parabola, point.x);
 }
 
-double * parabola_intersection_with_line(Parabola parabola, double k, double m){
+double * parabola_intersection_with_line(CParabola parabola, double k, double m){
     
     static double res[5];      //last element is equal to number of intersection points
     double d = pow(parabola.equation[1]-k,2) - 4.0*parabola.equation[0]*(parabola.equation[2]-m);
@@ -75,7 +75,7 @@ double * parabola_intersection_with_line(Parabola parabola, double k, double m){
     return res;
 }
 
-double * parabola_intersection_with_parabola(Parabola parabola, Parabola other){
+double * parabola_intersection_with_parabola(CParabola parabola, CParabola other){
     static double res[5];
     
     double d = pow(parabola.equation[1]-parabola_get_b(other), 2) - 4.0*(parabola.equation[0]-parabola_get_a(other))*(parabola.equation[2]-parabola_get_c(other));
@@ -105,7 +105,7 @@ double * parabola_intersection_with_parabola(Parabola parabola, Parabola other){
 }    
 
 
-double parabola_intersection_square_with_line(Parabola parabola, double k, double m){
+double parabola_intersection_square_with_line(CParabola parabola, double k, double m){
     double *points;
     points = parabola_intersection_with_line(parabola, k, m);
     
@@ -121,7 +121,7 @@ double parabola_intersection_square_with_line(Parabola parabola, double k, doubl
 }
 
 
-double parabola_intersection_square_with_parabola(Parabola parabola, Parabola other){
+double parabola_intersection_square_with_parabola(CParabola parabola, CParabola other){
     double *points;
     points = parabola_intersection_with_parabola(parabola, other);
     
@@ -144,7 +144,7 @@ double parabola_intersection_square_with_parabola(Parabola parabola, Parabola ot
 
 
 
-int ellipse_check_ellipse(Ellipse e){
+int ellipse_check_ellipse(CEllipse e){
     
     if(e.center.x != (e.verteces[2].x + e.verteces[3].x)/2.0 ||
     e.center.y != (e.verteces[2].y + e.verteces[3].y)/2.0)
@@ -160,11 +160,11 @@ int ellipse_check_ellipse(Ellipse e){
 
 
 
-Point ellipse_get_center(Ellipse e){
+CPoint ellipse_get_center(CEllipse e){
     return e.center;
 }
 
-double ellipse_get_value(Ellipse e, double x, int sign){
+double ellipse_get_value(CEllipse e, double x, int sign){
     
     double A = 1.0/pow(e.rx, 2);        
     double B = 1.0/pow(e.ry, 2);         
@@ -181,7 +181,7 @@ double ellipse_get_value(Ellipse e, double x, int sign){
 
 
 
-double ellipse_newton_raphson(Ellipse e, Ellipse ellipse, double x2, int mode) 
+double ellipse_newton_raphson(CEllipse e, CEllipse ellipse, double x2, int mode) 
 { 
     double x1, dx;
     int count = 0;
@@ -232,24 +232,24 @@ double ellipse_newton_raphson(Ellipse e, Ellipse ellipse, double x2, int mode)
 
                     
     
-void ellipse_calc_center(Ellipse e){
+void ellipse_calc_center(CEllipse e){
     e.center.x = (e.verteces[0].x + e.verteces[1].x)/2.0;
     e.center.y = (e.verteces[0].y + e.verteces[1].y)/2.0;
 }
 
 
-double get_length(Point a, Point b){
+double get_length(CPoint a, CPoint b){
     return sqrt(pow(a.x-b.x, 2)+pow(a.y-b.y, 2));
 }
  
 
-void ellipse_calc_center_2(Ellipse e){
+void ellipse_calc_center_2(CEllipse e){
     e.center.x = (e.focus_1.x + e.focus_2.x)/2;
     e.center.y = (e.focus_1.y + e.focus_2.y)/2;
 }    
 
 
-int ellipse_init_verteces(Ellipse e, Point array[4]){
+int ellipse_init_verteces(CEllipse e, CPoint array[4]){
 
     for(int i = 0; i < 4; i++){
         e.verteces[i] = array[i];
@@ -274,7 +274,7 @@ int ellipse_init_verteces(Ellipse e, Point array[4]){
 }
 
     
-int ellipse_init_focuses(Ellipse e, Point f_1, Point f_2, double rx, double ry){
+int ellipse_init_focuses(CEllipse e, CPoint f_1, CPoint f_2, double rx, double ry){
     e.focus_1 = f_1;
     e.focus_2 = f_2;
     e.rx = rx;
@@ -298,30 +298,30 @@ int ellipse_init_focuses(Ellipse e, Point f_1, Point f_2, double rx, double ry){
     
    
 
-Point * ellipse_get_focuses(Ellipse e){
-    static Point focuses[N_1];
+CPoint * ellipse_get_focuses(CEllipse e){
+    static CPoint focuses[N_1];
     focuses[0] = e.focus_1;
     focuses[1] = e.focus_2; 
     return focuses;
 }
 
-Point * ellipse_get_vertices(Ellipse e){
-    static Point v[4];
+CPoint * ellipse_get_vertices(CEllipse e){
+    static CPoint v[4];
     for (int i = 0; i < 4; i++){
         v[i] = e.verteces[i];
     }
     return v;
 }
 
-double ellipse_get_rx(Ellipse e){
+double ellipse_get_rx(CEllipse e){
     return e.rx;
 }
 
-double ellipse_get_ry(Ellipse e){
+double ellipse_get_ry(CEllipse e){
     return e.ry;
 }    
 
-int ellipse_is_inside(Ellipse e, Point a){
+int ellipse_is_inside(CEllipse e, CPoint a){
     if(pow((a.x-e.center.x),2)/pow(e.rx, 2) + pow((a.y-e.center.y),2)/pow(e.ry, 2) <= 1){
         return 1;
     }
@@ -329,16 +329,16 @@ int ellipse_is_inside(Ellipse e, Point a){
 }
 
 
-double ellipse_get_square(Ellipse e){
+double ellipse_get_square(CEllipse e){
     return M_PI*e.rx*e.ry;
 }
 
-int ellipse_input(FILE *fi, Ellipse e){
+int ellipse_input(FILE *fi, CEllipse e){
     int check;
     printf( "Choose a method of input: 1 -- coordinates of verteces, 0 -- foci and radiuses\n");
     fscanf(fi, "%i", &check);
     if (check){
-        Point array[4];
+        CPoint array[4];
         for (int i = 0; i < 4; i++){
             printf( "Vertex %i \n", i+1);
             printf( "x = ");
@@ -349,7 +349,7 @@ int ellipse_input(FILE *fi, Ellipse e){
         }
     }
     else{
-        Point focus_1, focus_2;
+        CPoint focus_1, focus_2;
         double xr, yr;
         printf("Focus_1\n");
         printf("x = ");
@@ -370,8 +370,8 @@ int ellipse_input(FILE *fi, Ellipse e){
     return 0;
 }
 
-void ellipse_print(FILE * fh, Ellipse e ){
-    fprintf(fh, "<< Ellipse >>" );
+void ellipse_print(FILE * fh, CEllipse e ){
+    fprintf(fh, "<< CEllipse >>" );
     fprintf(fh, "-- Center --" );
     fprintf(fh, "(%lf , %lf)", e.center.x, e.center.y);
     fprintf(fh, "-- Verteces --" );
@@ -388,7 +388,7 @@ void ellipse_print(FILE * fh, Ellipse e ){
 
    
 
-double * ellipse_intersection_with_line(Ellipse e, double m, double c){
+double * ellipse_intersection_with_line(CEllipse e, double m, double c){
     
     static double res[5];                                                         
         
@@ -408,11 +408,11 @@ double * ellipse_intersection_with_line(Ellipse e, double m, double c){
     return res;
 }
 
-Point * ellipse_intersection_with_ellipse(Ellipse e, Ellipse ellipse){
+CPoint * ellipse_intersection_with_ellipse(CEllipse e, CEllipse ellipse){
     double eq1, eq2, eq3, eq4, eq1_l = 0, eq2_l = 0, eq3_l = 0, eq4_l = 0;
     int i1 = 0, i2 = 0, i3 = 0, i4 = 0;
     double eq1_sols[2], eq2_sols[2],eq3_sols[2],eq4_sols[2];
-    static Point res[4];
+    static CPoint res[4];
     double min_x = fmin(e.verteces[0].x, (*(ellipse_get_vertices(ellipse))).x);        
     double max_x = fmax(e.verteces[1].x, (*(ellipse_get_vertices(ellipse)+1)).x);        
     
@@ -455,25 +455,25 @@ Point * ellipse_intersection_with_ellipse(Ellipse e, Ellipse ellipse){
             
     int i_s = 0;
     for (int i = 0; i < i1; i++) {
-        Point r1;
+        CPoint r1;
         r1.x = eq1_sols[i];
         r1.y = ellipse_get_value(e, eq1_sols[i], 1);
         res[i_s] = r1; i_s++;
     }
     for (int i = 0; i < i2; i++) {
-        Point r2;
+        CPoint r2;
         r2.x = eq2_sols[i];
         r2.y = ellipse_get_value(e, eq2_sols[i], 1);
         res[i_s] = r2; i_s++;
     }
     for (int i = 0; i < i3; i++) {
-        Point r3; 
+        CPoint r3; 
         r3.x = eq3_sols[i]; 
         r3.y = ellipse_get_value(e, eq3_sols[i], 1);
         res[i_s] = r3; i_s++;
     }
     for (int i = 0; i < i4; i++){
-        Point r4;
+        CPoint r4;
         r4.x =  eq4_sols[i];
         r4.y = ellipse_get_value(e, eq4_sols[i], 1);
         res[i_s] = r4; i_s++;
@@ -484,7 +484,7 @@ Point * ellipse_intersection_with_ellipse(Ellipse e, Ellipse ellipse){
 
 
  
-void hyperbole_init(Hyperbole hyperbole, double array[5]){
+void hyperbole_init(CHyperbole hyperbole, double array[5]){
     for (int i = 0; i < 5; i++){
         hyperbole.equation[i] = array[i];
     }
@@ -494,7 +494,7 @@ void hyperbole_init(Hyperbole hyperbole, double array[5]){
 
 
 
-double hyperbole_newton_raphson(Hyperbole h, Hyperbole hyperbole, double x2, int mode) 
+double hyperbole_newton_raphson(CHyperbole h, CHyperbole hyperbole, double x2, int mode) 
 { 
     double x1, dx;
     int count = 0;
@@ -545,7 +545,7 @@ double hyperbole_newton_raphson(Hyperbole h, Hyperbole hyperbole, double x2, int
 
 
 
-double hyperbole_newton_raphson_p(Hyperbole h, Parabola hyperbole, double x2, int mode) 
+double hyperbole_newton_raphson_p(CHyperbole h, CParabola hyperbole, double x2, int mode) 
 { 
     double x1, dx;
     int count = 0;
@@ -594,23 +594,23 @@ double hyperbole_newton_raphson_p(Hyperbole h, Parabola hyperbole, double x2, in
 }
     
     
-double hyperbole_get_x0(Hyperbole h ){
+double hyperbole_get_x0(CHyperbole h ){
     return h.equation[0]; 
 }
 
-double hyperbole_get_y0(Hyperbole h ){
+double hyperbole_get_y0(CHyperbole h ){
     return h.equation[1]; 
 }
 
-double hyperbole_get_a(Hyperbole h ){
+double hyperbole_get_a(CHyperbole h ){
     return h.equation[2]; 
 }
 
-double hyperbole_get_b(Hyperbole h ){
+double hyperbole_get_b(CHyperbole h ){
     return h.equation[3]; 
 }
    
-void hyperbole_input(FILE *fi, Hyperbole h){
+void hyperbole_input(FILE *fi, CHyperbole h){
     double koefs[5];
     double r;
     printf( "<< Hyperbola >>\n");
@@ -631,7 +631,7 @@ void hyperbole_input(FILE *fi, Hyperbole h){
     hyperbole_init(h, koefs);
 }
 
-void hyperbole_print(FILE * fh, Hyperbole h){
+void hyperbole_print(FILE * fh, CHyperbole h){
     
      fprintf(fh, "<< Hyperbola >>" );
      fprintf(fh, "x0 = %lf " , hyperbole_get_x0(h) );
@@ -643,8 +643,8 @@ void hyperbole_print(FILE * fh, Hyperbole h){
 
 
 
-Point * hyperbole_get_foci(Hyperbole h){
-    static Point res[2];
+CPoint * hyperbole_get_foci(CHyperbole h){
+    static CPoint res[2];
     
     double e = pow(1.0+(hyperbole_get_b(h)*hyperbole_get_b(h))/(hyperbole_get_a(h)*hyperbole_get_a(h)), 0.5);
     if (h.equation[4] > 0){
@@ -664,24 +664,24 @@ Point * hyperbole_get_foci(Hyperbole h){
 }
 
 
-double hyperbole_get_value(Hyperbole h, double x, int sign ){
+double hyperbole_get_value(CHyperbole h, double x, int sign ){
     return hyperbole_get_y0(h) + (sign/hyperbole_get_a(h))*hyperbole_get_b(h)*pow(fabs(hyperbole_get_a(h)*hyperbole_get_a(h) - x*x + 2*x*hyperbole_get_x0(h)-hyperbole_get_x0(h)*hyperbole_get_x0(h) ) , 0.5 );
 }
 
 
     
-int hyperbole_check_point(Hyperbole h, Point point){
+int hyperbole_check_point(CHyperbole h, CPoint point){
     
     if (pow((point.x - hyperbole_get_x0(h)),2)/pow(hyperbole_get_a(h),2) + pow((point.y - hyperbole_get_y0(h)),2)/pow(hyperbole_get_b(h),2) >= 1) return 1;
     else return 0;      
 }
 
 
-Point * hyperbole_intersection_p(Hyperbole h, Parabola parabola){
+CPoint * hyperbole_intersection_p(CHyperbole h, CParabola parabola){
     double eq1, eq2, eq3, eq4, eq1_l = 0, eq2_l = 0, eq3_l = 0, eq4_l = 0;
     int i1 = 0, i2 = 0, i3 = 0, i4 = 0;
     double eq1_sols[2], eq2_sols[2],eq3_sols[2],eq4_sols[2];
-    static Point res[4];
+    static CPoint res[4];
     double min_x = -5;        
     double max_x = 5;        
     
@@ -718,28 +718,28 @@ Point * hyperbole_intersection_p(Hyperbole h, Parabola parabola){
     int i_s = 0;
     for (int i = 0; i < i1; i++) {
 
-        Point k;
+        CPoint k;
         k.x = eq1_sols[i]; 
         k.y = hyperbole_get_value(h, eq1_sols[i],1);
         res[i_s] = k;
         i_s++;}
     for (int i = 0; i < i2; i++) {
     
-        Point k;
+        CPoint k;
         k.x = eq2_sols[i]; 
         k.y = hyperbole_get_value(h, eq2_sols[i],-1);
         res[i_s] = k;
         i_s++;    }
     for (int i = 0; i < i3; i++) {
     
-        Point k;
+        CPoint k;
         k.x = eq3_sols[i]; 
         k.y = hyperbole_get_value(h, eq3_sols[i],1);
         res[i_s] = k;
         i_s++;     }
     for (int i = 0; i < i4; i++) {
 
-        Point k;
+        CPoint k;
         k.x = eq4_sols[i]; 
         k.y = hyperbole_get_value(h, eq4_sols[i],-1);
         res[i_s] = k;
@@ -749,11 +749,11 @@ Point * hyperbole_intersection_p(Hyperbole h, Parabola parabola){
 }
 
 
-Point * hyperbole_intersection(Hyperbole h, Hyperbole parabola){
+CPoint * hyperbole_intersection(CHyperbole h, CHyperbole parabola){
     double eq1, eq2, eq3, eq4, eq1_l = 0, eq2_l = 0, eq3_l = 0, eq4_l = 0;
     int i1 = 0, i2 = 0, i3 = 0, i4 = 0;
     double eq1_sols[2], eq2_sols[2],eq3_sols[2],eq4_sols[2];
-    static Point res[4];
+    static CPoint res[4];
     double min_x = -5;        
     double max_x = 5;        
     
@@ -794,28 +794,28 @@ Point * hyperbole_intersection(Hyperbole h, Hyperbole parabola){
     int i_s = 0;
     for (int i = 0; i < i1; i++) {
 
-        Point k;
+        CPoint k;
         k.x = eq1_sols[i]; 
         k.y = hyperbole_get_value(h, eq1_sols[i], 1);
         res[i_s] = k;
         i_s++;}
     for (int i = 0; i < i2; i++) {
     
-        Point k;
+        CPoint k;
         k.x = eq2_sols[i]; 
         k.y = hyperbole_get_value(h, eq2_sols[i], -1);
         res[i_s] = k;
         i_s++;    }
     for (int i = 0; i < i3; i++) {
     
-        Point k;
+        CPoint k;
         k.x = eq3_sols[i]; 
         k.y = hyperbole_get_value(h, eq3_sols[i], 1);
         res[i_s] = k;
         i_s++;     }
     for (int i = 0; i < i4; i++) {
 
-        Point k;
+        CPoint k;
         k.x = eq4_sols[i]; 
         k.y = hyperbole_get_value(h, eq4_sols[i], -1);
         res[i_s] = k;
