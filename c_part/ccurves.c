@@ -234,9 +234,9 @@ double cellipse_newton_raphson(CEllipse e, CEllipse ellipse, double x2, int mode
 
                     
     
-void cellipse_calc_center(CEllipse e){
-    e.center.x = (e.verteces[0].x + e.verteces[1].x)/2.0;
-    e.center.y = (e.verteces[0].y + e.verteces[1].y)/2.0;
+void cellipse_calc_center(CEllipse *e){
+    e->center.x = (e->verteces[0].x + e->verteces[1].x)/2.0;
+    e->center.y = (e->verteces[0].y + e->verteces[1].y)/2.0;
 }
 
 
@@ -245,9 +245,9 @@ double get_length(CPoint a, CPoint b){
 }
  
 
-void cellipse_calc_center_2(CEllipse e){
-    e.center.x = (e.focus_1.x + e.focus_2.x)/2;
-    e.center.y = (e.focus_1.y + e.focus_2.y)/2;
+void cellipse_calc_center_2(CEllipse *e){
+    e->center.x = (e->focus_1.x + e->focus_2.x)/2;
+    e->center.y = (e->focus_1.y + e->focus_2.y)/2;
 }    
 
 
@@ -257,7 +257,7 @@ int cellipse_init_verteces(CEllipse *e, CPoint array[4]){
         e->verteces[i] = array[i];
     }
     
-    cellipse_calc_center(*e);
+    cellipse_calc_center(e);
     
     e->rx = get_length(e->center, e->verteces[0]);
     e->ry = get_length(e->center, e->verteces[2]);
@@ -281,7 +281,7 @@ int cellipse_init_focuses(CEllipse *e, CPoint f_1, CPoint f_2, double rx, double
     e->focus_2 = f_2;
     e->rx = rx;
     e->ry = ry;
-    cellipse_calc_center_2(*e);
+    cellipse_calc_center_2(e);
     
     e->verteces[0].x = e->center.x + e->rx*(e->center.x - e->focus_1.x)/get_length(e->center, e->focus_1);
     e->verteces[0].y = e->center.y + e->rx*(e->center.y - e->focus_1.y)/get_length(e->center, e->focus_1);

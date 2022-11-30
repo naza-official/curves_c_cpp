@@ -84,11 +84,11 @@ double cellipse_get_value(CEllipse e, double x, int sign);
 
 double cellipse_newton_raphson(CEllipse e, CEllipse ellipse, double x2, int mode); 
                    
-void cellipse_calc_center(CEllipse e);
+void cellipse_calc_center(CEllipse *e);
 
 double get_length(CPoint a, CPoint b); 
 
-void cellipse_calc_center_2(CEllipse e);   
+void cellipse_calc_center_2(CEllipse *e);   
 
 int cellipse_init_verteces(CEllipse *e, CPoint array[4]);
     
